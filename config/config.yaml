@@ -1,0 +1,4 @@
+defaults:
+    - dataset: base_dataset
+    - trainer: base_trainer
+    - evaluator: base_evaluator
