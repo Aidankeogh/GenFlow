@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/leonardoclo/git/rattaca/mlflow-example/mlruns/0/72faa1d1cd8041e2b25f7376fbae9758/artifacts
+end_time: 1681607041486
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 72faa1d1cd8041e2b25f7376fbae9758
+run_name: iris_experiment
+run_uuid: 72faa1d1cd8041e2b25f7376fbae9758
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1681607027693
+status: 3
+tags: []
+user_id: leonardoclo
