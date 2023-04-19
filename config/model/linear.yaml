@@ -1,0 +1,4 @@
+name: LinearRegression
+import_module: sklearn.linear_model
+params: 
+    fit_intercept: True
