@@ -4,8 +4,18 @@ import xarray as xr
 from omegaconf import DictConfig
 import pandas as pd
 
-
 def load_dataset(cfg: DictConfig):
+    if cfg.geno.file_type == "plink":
+        return load_dataset_from_plink(cfg)
+    elif cfg.geno.file_type == "csv":
+        return load_dataset_from_csv(cfg)
+    else:
+        raise ValueError("File type not supported.")
+
+def load_dataset_from_csv(cfg: DictConfig):
+    pass
+
+def load_dataset_from_plink(cfg: DictConfig):
     ds = plink.read_plink(
         bed_path = cfg.bed,
         bim_path = cfg.bim,
@@ -27,5 +37,6 @@ def load_dataset(cfg: DictConfig):
     X_geno = geno_with_pheno.drop(columns = phenotypes.columns).to_numpy()
     
     return(X_geno, y_pheno)
+
 
 
