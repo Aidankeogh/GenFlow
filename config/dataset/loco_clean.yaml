@@ -1,0 +1,12 @@
+geno:
+    filetype: plink
+    bed: ratgenes_pruned/ratgenes_pruned.bed
+    bim: ratgenes_pruned/ratgenes_pruned.bim
+    fam: ratgenes_pruned/ratgenes_pruned.fam
+pheno: pheno_loco_clean.txt
+dimensionality_reduction:
+    name: PCA
+    import_module: sklearn.decomposition
+    params: 
+        n_components: 100
+        svd_solver: randomized
