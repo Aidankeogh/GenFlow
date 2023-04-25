@@ -1,3 +1,6 @@
+# Data folder
+lightning_logs/
+data/
 
 #DS Store
 .DS_Store
