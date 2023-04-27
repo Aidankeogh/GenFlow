@@ -15,9 +15,9 @@ import xarray as xr
 # If pre-filtered pickeled version of the sgkit xarray is not passed in, the object will need the plink
 # version of the genotype data.  Also needed is the phenotype data and a possible select list of 
 # traits to choose from.
-def training_set(ds_pkl = None, gwas_pvalue = 0.05, geno_bed = 'ratgenes_pruned/ratgenes_pruned.bed', 
-	geno_bim = 'ratgenes_pruned/ratgenes_pruned.bim', geno_fam = 'ratgenes_pruned/ratgenes_pruned.fam', 
-	phenotypes = 'pheno_loco_clean.txt', select_traits = ['loco_maxcent', 'loco_maxdis', 'loco_maxrear', 'loco_maxact']):
+def training_set(ds_pkl = None, gwas_pvalue = 0.05, geno_bed = 'dataset/ratgenes_pruned/ratgenes_pruned.bed', 
+	geno_bim = 'dataset/ratgenes_pruned/ratgenes_pruned.bim', geno_fam = 'dataset/ratgenes_pruned/ratgenes_pruned.fam', 
+	phenotypes = 'dataset/pheno_loco_clean.txt', select_traits = ['loco_maxcent', 'loco_maxdis', 'loco_maxrear', 'loco_maxact']):
 
 	try: 
 		phenotypes = pd.read_csv(phenotypes, sep = '\t')
@@ -49,6 +49,8 @@ def training_set(ds_pkl = None, gwas_pvalue = 0.05, geno_bed = 'ratgenes_pruned/
 
 		return(X_geno, Y_pheno)
 
+
+	# If no pre-filtered Sgkit dataset 
 
 	# Read in plink version of genotypes
 	ds = plink.read_plink(bed_path = geno_bed, bim_path = geno_bim, fam_path = geno_fam)
