@@ -1,4 +1,4 @@
-# Pipeline for build SNP dataset and facilitating geome-scale AI with HS rat WGS data
+# Pipeline for building SNP dataset and facilitating geome-scale AI with HS rat WGS data
 
 # by Zach Wallace
 
