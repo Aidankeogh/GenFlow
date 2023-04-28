@@ -50,7 +50,7 @@ def training_set(ds_pkl = None, gwas_pvalue = 0.05, geno_bed = 'dataset/ratgenes
 		return(X_geno, Y_pheno)
 
 
-	# If no pre-filtered Sgkit dataset 
+	# If no pre-filtered Sgkit dataset ...
 
 	# Read in plink version of genotypes
 	ds = plink.read_plink(bed_path = geno_bed, bim_path = geno_bim, fam_path = geno_fam)
