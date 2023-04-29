@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/leonardoclo/git/rattaca/app/flask/mlruns/200128719043135066/d50e7a3b4be54763848de41cded9c581/artifacts
+end_time: 1682706042702
+entry_point_name: ''
+experiment_id: '200128719043135066'
+lifecycle_stage: active
+run_id: d50e7a3b4be54763848de41cded9c581
+run_name: iris_4
+run_uuid: d50e7a3b4be54763848de41cded9c581
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1682706034189
+status: 3
+tags: []
+user_id: leonardoclo
