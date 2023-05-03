@@ -16,10 +16,10 @@ class training_data(object):
 	# Filter the genotypes data based on phenotypes labels, missing variants, and GWAS statistical association
 	# Also needed is the phenotype data and a possible select list of traits to choose from.
 	def __init__(self, 
-		geno_bed = 'dataset/ratgenes_pruned/ratgenes_pruned_0.8.bed', 
-		geno_bim = 'dataset/ratgenes_pruned/ratgenes_pruned_0.8.bim', 
-		geno_fam = 'dataset/ratgenes_pruned/ratgenes_pruned_0.8.fam', 
-		phenotypes = 'dataset/pheno_loco_clean.txt', 
+		geno_bed = 'ratgenes_pruned/ratgenes_pruned_0.8.bed', 
+		geno_bim = 'ratgenes_pruned/ratgenes_pruned_0.8.bim', 
+		geno_fam = 'ratgenes_pruned/ratgenes_pruned_0.8.fam', 
+		phenotypes = 'phenotypes/pheno_loco_clean.txt', 
 		select_traits = ['loco_maxcent', 'loco_maxdis', 'loco_maxrear', 'loco_maxact']):
 
 		# Read in plink version of genotypes
@@ -64,9 +64,12 @@ class training_data(object):
 	# Return matrix format of the genotypes data filtered by gwas_pvalues
 	def gwas_filtered(self, gwas_pvalue = 0.05):
 
-		print("Filtering based on GWAS statisical association ...")
-		ds_filtered = self.ds_gwas.sel(variants=((self.ds_gwas.variant_linreg_p_value < gwas_pvalue).any('traits')))
-		print("Done filtering based on GWAS\n")
+		if gwas_pvalue:
+			print("Filtering based on GWAS statisical association ...")
+			ds_filtered = self.ds_gwas.sel(variants=((self.ds_gwas.variant_linreg_p_value < gwas_pvalue).any('traits')))
+			print("Done filtering based on GWAS\n")
+		else:
+			ds_filtered = self.ds_gwas
 
 		# Convert the genotypes xarray to a numpy matrix
 		print("Building genotypes matrix ...")
