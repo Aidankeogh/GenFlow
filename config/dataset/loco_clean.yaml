@@ -1,8 +1,8 @@
 params:
-    geno_bed: dataset/ratgenes_pruned/ratgenes_pruned_0.8.bed
-    geno_bim: dataset/ratgenes_pruned/ratgenes_pruned_0.8.bim
-    geno_fam: dataset/ratgenes_pruned/ratgenes_pruned_0.8.fam
-    phenotypes: dataset/pheno_loco_clean.txt
+    geno_bed: ratgenes_pruned/ratgenes_pruned_0.8.bed
+    geno_bim: ratgenes_pruned/ratgenes_pruned_0.8.bim
+    geno_fam: ratgenes_pruned/ratgenes_pruned_0.8.fam
+    phenotypes: phenotypes/pheno_loco_clean.txt
     select_traits:
       - 'loco_maxcent'
       - 'loco_maxdis'
