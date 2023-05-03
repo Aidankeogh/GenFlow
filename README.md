@@ -2,6 +2,8 @@
 Machine learning on rat genes
 
 
-## Run `source env_setup.sh`
+## This project uses hydra, the main entrypoint is training_pipeline.py
 
-## data is in rat_data/Heterogenous-stock_n14780_10182022_QC_Sex_Het_pass_n13526.vcf.gz
+# To run the default example, run `python training_pipeline.py` from the root directory.
+
+# For an example running a custom config, try `python training_pipeline.py --config-name=optuna_test`, which runs config/optuna_test.yaml
