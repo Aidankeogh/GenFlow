@@ -1,6 +1,7 @@
 # Data folder
 lightning_logs/
 data/
+multirun/
 
 #DS Store
 .DS_Store
