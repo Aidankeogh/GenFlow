@@ -1,12 +1,18 @@
-geno:
-    filetype: plink
-    bed: ratgenes_pruned/ratgenes_pruned.bed
-    bim: ratgenes_pruned/ratgenes_pruned.bim
-    fam: ratgenes_pruned/ratgenes_pruned.fam
-pheno: pheno_loco_clean.txt
+params:
+    geno_bed: dataset/ratgenes_pruned/ratgenes_pruned_0.8.bed
+    geno_bim: dataset/ratgenes_pruned/ratgenes_pruned_0.8.bim
+    geno_fam: dataset/ratgenes_pruned/ratgenes_pruned_0.8.fam
+    phenotypes: dataset/pheno_loco_clean.txt
+    select_traits:
+      - 'loco_maxcent'
+      - 'loco_maxdis'
+      - 'loco_maxrear'
+      - 'loco_maxact'
+gwas_p_value: 0.05
 dimensionality_reduction:
     name: PCA
     import_module: sklearn.decomposition
     params: 
         n_components: 100
         svd_solver: randomized
+
