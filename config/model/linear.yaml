@@ -1,4 +1,5 @@
-name: LinearRegression
+name: Ridge
 import_module: sklearn.linear_model
 params: 
+    alpha: 0.1
     fit_intercept: True

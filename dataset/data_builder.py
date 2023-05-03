@@ -16,9 +16,9 @@ class training_data(object):
 	# Filter the genotypes data based on phenotypes labels, missing variants, and GWAS statistical association
 	# Also needed is the phenotype data and a possible select list of traits to choose from.
 	def __init__(self, 
-		geno_bed = 'dataset/ratgenes_pruned/ratgenes_pruned.bed', 
-		geno_bim = 'dataset/ratgenes_pruned/ratgenes_pruned.bim', 
-		geno_fam = 'dataset/ratgenes_pruned/ratgenes_pruned.fam', 
+		geno_bed = 'dataset/ratgenes_pruned/ratgenes_pruned_0.8.bed', 
+		geno_bim = 'dataset/ratgenes_pruned/ratgenes_pruned_0.8.bim', 
+		geno_fam = 'dataset/ratgenes_pruned/ratgenes_pruned_0.8.fam', 
 		phenotypes = 'dataset/pheno_loco_clean.txt', 
 		select_traits = ['loco_maxcent', 'loco_maxdis', 'loco_maxrear', 'loco_maxact']):
 
@@ -54,11 +54,7 @@ class training_data(object):
 		ds_known = ds.sel(variants=~variant_mask)
 		print("Done filtering unknown SNPs\n")
 
-		# Compute GWAS satistical regression pvalues
-		if select_traits:
-			ds_gwas = self.gwas_lin_reg(ds_known, select_traits)
-		else:
-			ds_gwas = self.gwas_lin_reg(ds_known, list(phenotypes.columns))
+		ds_gwas = self.gwas_lin_reg(ds_known, list(phenotypes.columns))
 
 		self.phenotypes = phenotypes
 		self.ds_known = ds_known
