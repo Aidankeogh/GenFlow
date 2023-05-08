@@ -18,6 +18,7 @@ def my_app(cfg: DictConfig) -> None:
     model = train_model(X_train, y_train, cfg.model)
     results = evaluate_model(model, X_val, y_val)
     print(results)
+    return results
 
 
     
