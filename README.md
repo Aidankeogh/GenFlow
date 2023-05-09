@@ -3,12 +3,14 @@ Machine learning on rat genes
 
 ## Setup
 
-### connect to https://narrows-gpu.sdsc.edu
+ connect to https://narrows-gpu.sdsc.edu
 
-### conda activate capstone-base
+ run `conda activate capstone-base`
 
-## This project uses hydra, the main entrypoint is training_pipeline.py
+## Running the trainer
 
-### To run the default example, run `python training_pipeline.py` from the root directory.
+This project uses hydra, the main entrypoint is training_pipeline.py
 
-### For an example running a custom config, try `python training_pipeline.py --config-name=optuna_test`, which runs config/optuna_test.yaml
+ To run the default example, run `python training_pipeline.py` from the root directory.
+
+ For an example running a custom config, try `python training_pipeline.py --config-name=optuna_test`, which runs config/optuna_test.yaml
