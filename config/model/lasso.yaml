@@ -1,0 +1,5 @@
+name: Lasso
+import_module: sklearn.linear_model
+params: 
+    alpha: 1
+    fit_intercept: True
