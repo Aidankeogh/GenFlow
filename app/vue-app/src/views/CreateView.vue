@@ -1,12 +1,12 @@
 <template>
     <ft-container>
-      <template #title><label> PCA Visualization</label></template>
+      <template #title><label> Create Page</label></template>
       <div v-if="!res.success" class="resp-div"> Server Response: {{JSON.stringify(res)}}</div>
       <div class="ft-chart" v-if="res.success">
         <span>Aloha</span>
       </div>
       <div>
-        PCA
+        Create
       </div>
     </ft-container>
   </template>
@@ -16,7 +16,7 @@
 
 
     export default {
-      name: 'pca-view',
+      name: 'create-view',
       components: {
         FtContainer
       },

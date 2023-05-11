@@ -10,28 +10,20 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/pca',
-      name: 'pca',
+      path: '/dashboards',
+      name: 'dashboards',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/PcaView.vue')
+      component: () => import('../views/DashboardsView.vue')
     },
     {
-      path: '/regression',
-      name: 'regression',
+      path: '/create',
+      name: 'create',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/RegressionView.vue')
-    },
-    {
-      path: '/classifier',
-      name: 'classifier',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ClassifierView.vue')
+      component: () => import('../views/CreateView.vue')
     }
   ]
 })

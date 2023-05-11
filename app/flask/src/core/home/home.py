@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import os
 import yaml
@@ -5,33 +6,109 @@ from datetime import datetime
 
 ml_folder = 'mlruns'
 
+def list_folders(path):
+    """
+    Returns a list of all directories in the given path.
+    """
+    dir_list = next(os.walk(path))[1]
+    return dir_list
 
 def extract_exp_fields(exp):
     with open(f'{ml_folder}/{exp}/meta.yaml', 'r') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
 
     return {
-        'Emperiment Id': exp,
-        'Experiment Name': data['name'],
-        'Experiment Created': datetime.fromtimestamp(data['creation_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S"),
-        'Experiment Updated': datetime.fromtimestamp(data['last_update_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S")
+        'exp_id': exp,
+        'exp_name': data['name'],
+        'exp_created': datetime.fromtimestamp(data['creation_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S"),
+        'exp_updated': datetime.fromtimestamp(data['last_update_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S")
     }
 
-def get_df():
-    dir_list = os.listdir(ml_folder)
+
+def extract_run_fields(exp, run):
+    with open(f'{ml_folder}/{exp}/{run}/meta.yaml', 'r') as file:
+        data = yaml.load(file, Loader=yaml.FullLoader)
+
+    return {
+        'run_id': run,
+        'run_name': data['run_name'],
+        'run_start': datetime.fromtimestamp(data['start_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S"),
+        'run_end': datetime.fromtimestamp(data['end_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+
+def get_df(params={}):
+    dir_list = list_folders(ml_folder)
+    
     exps = [
         d
         for d in dir_list 
         if len(os.listdir(f'{ml_folder}/{d}')) > 1
-        and d != '.trash'
+        if d[0] != '.'
     ]
     
     data = []
     for exp in exps:
-        data.append(extract_exp_fields(exp))
+        exp_fields = extract_exp_fields(exp)
+        run_list = list_folders(f'{ml_folder}/{exp}')
+        for run in run_list:
+            if run[0] == '.':
+                continue
+            run_fields = extract_run_fields(exp, run)
+            
+            if 'params' in params:
+                run_params = {f'param_{k}': v for k, v in get_params(exp, run).items()}
+                run_fields = {**run_fields, **run_params}
 
-    df = pd.DataFrame(data)
+            if 'metrics' in params:
+                run_metrics = {f'metric_{k}': v for k, v in get_metrics(exp, run).items()}
+                run_fields = {**run_fields, **run_metrics}
+
+            data.append({**exp_fields, **run_fields})
+
+    df = pd.DataFrame(data).fillna(np.nan).replace([np.nan], [None])
+
+    df['ix'] = df.index + 1
+
+    show = [col for col in params['show'] if col in df.columns]
     return {
-        'rows': df.to_dict(orient='records'),
-        'columns': [{'text': col, 'value': col, 'sortable': True} for col in df.columns]
+        'rows': df[show].to_dict(orient='records'),
+        'columns': [{'text': params['rename'].get(col, col), 'value': col, 'sortable': True} for col in show]
     }
+
+
+def get_run_spec(row):
+    exp_id = row['exp_id']
+    run_id = row['run_id']
+
+    return {
+        'params': get_params(exp_id, run_id),
+        'metrics': get_metrics(exp_id, run_id),
+        'row': {'exp_id': exp_id, 'run_id': run_id}
+    }
+
+
+def get_metrics(exp_id, run_id):
+    folder_path = f'{ml_folder}/{exp_id}/{run_id}/metrics'
+    
+    metrics = {}
+    file_names = os.listdir(folder_path)
+    for file_name in file_names:        
+        file_path = os.path.join(folder_path, file_name)
+        with open(file_path, 'r') as f:
+            metrics[file_name] = f.read().split(' ')[1]
+
+    return metrics
+
+
+def get_params(exp_id, run_id):
+    folder_path = f'{ml_folder}/{exp_id}/{run_id}/params'
+    
+    params = {}
+    file_names = os.listdir(folder_path)
+    for file_name in file_names:        
+        file_path = os.path.join(folder_path, file_name)
+        with open(file_path, 'r') as f:
+            params[file_name] = f.read()
+    
+    return params
