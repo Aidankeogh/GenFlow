@@ -9,13 +9,15 @@ from src.core.pca import pca
 
 @app.route("/home")
 @endpoint_handler
-def health():
-    res = home.get_df()
+def experiments():
+    res = home.get_df(json.loads(request.args.get('spec')))
     return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}
 
 
-@app.route("/pca")
+@app.route("/home-spec")
 @endpoint_handler
-def pca_get():
-    res = pca.get_df()
+def run_spec():
+    res = home.get_run_spec(json.loads(request.args.get('spec')))
     return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}
+
+

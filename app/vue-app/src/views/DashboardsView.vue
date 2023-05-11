@@ -1,12 +1,12 @@
 <template>
     <ft-container>
-      <template #title><label> Regression Visualization</label></template>
+      <template #title><label> Dashboards Page</label></template>
       <div v-if="!res.success" class="resp-div"> Server Response: {{JSON.stringify(res)}}</div>
       <div class="ft-chart" v-if="res.success">
         <span>Aloha</span>
       </div>
       <div>
-        Regression
+        Dashboards
       </div>
     </ft-container>
   </template>
@@ -14,8 +14,9 @@
   <script>
     import FtContainer from '@/components/utils/ft-container/FtContainer.vue';
 
+
     export default {
-      name: 'regression-view',
+      name: 'dashboards-view',
       components: {
         FtContainer
       },
