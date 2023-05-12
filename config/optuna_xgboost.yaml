@@ -1,7 +1,9 @@
-# A test that sweeps over the alpha parameter for a ridge regression model.
+# A test that sweeps over the multiples parameters for a xgboost model.
 defaults:
-    - dataset: loco_clean
+    - dataset: dataset_cluster
     - model: xgboost
+    - override hydra/sweeper: optuna
+    - override hydra/sweeper/sampler: tpe
 
 hydra:
   mode: MULTIRUN
@@ -9,9 +11,19 @@ hydra:
     sampler:
       seed: 123
     direction: maximize
-    study_name: optuna_test
+    study_name: optuna_xgboost
     storage: null
-    n_trials: 20
-    n_jobs: 1
+    n_trials: 10
+    n_jobs: -1
     params:
-      model.params.alpha: interval(0, 5)
+      model.params.eta: interval(0, 1)
+      model.params.gamma: interval(0, 10)
+      model.params.max_depth: interval(0, 10)
+      model.params.min_child_weight: interval(0, 10)
+      model.params.max_delta_step: interval(0, 10)
+      model.params.lambda: interval(0, 10)
+      model.params.alpha: interval(0, 10)
+      model.params.subsample: interval(0.1, 1)
+      
+      
+      

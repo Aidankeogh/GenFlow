@@ -1,6 +1,7 @@
-name: Lasso
+name: ElasticNet
 import_module: sklearn.linear_model
 params: 
     alpha: 1
+    l1_ratio: 0.5
     max_iter: 10000
     fit_intercept: True
