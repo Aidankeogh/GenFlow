@@ -1,4 +1,6 @@
 # A test that sweeps over the alpha parameter for a ridge regression model.
+experiment_name: optuna_xgboost
+
 defaults:
     - dataset: loco_clean
     - model: xgboost
@@ -9,7 +11,7 @@ hydra:
     sampler:
       seed: 123
     direction: maximize
-    study_name: optuna_test
+    study_name: ${experiment_name}
     storage: null
     n_trials: 20
     n_jobs: 1

@@ -1,0 +1,13 @@
+# A test that sweeps over the alpha parameter for a ridge regression model.
+experiment_name: grid_search_test
+
+defaults:
+    - dataset: dataset_cluster
+    - model: linear
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    params:
+      model.params.alpha: 0.1,0.2,0.3
+      model.params.fit_intercept: True,False

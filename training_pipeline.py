@@ -1,5 +1,6 @@
 import hydra
 from omegaconf import DictConfig, OmegaConf
+from hydra.core.hydra_config import HydraConfig
 from dataset.data_builder import training_data
 from models.sklearn_factory import train_model
 from evaluator.r2_evaluator import evaluate_model
@@ -11,9 +12,9 @@ import mlflow
 
 @hydra.main(version_base=None, config_path="config", config_name="config")
 def my_app(cfg: DictConfig) -> None:
-    mlflow.set_experiment("optuna_test")
+    
+    mlflow.set_experiment(cfg.experiment_name)
     with mlflow.start_run():
-        
         print("Config: ")
         print(OmegaConf.to_yaml(cfg))
         log_params_from_omegaconf_dict(cfg)
@@ -26,7 +27,6 @@ def my_app(cfg: DictConfig) -> None:
         
         # mlflow log all results
         for result, trait in zip(results, cfg.dataset.params.select_traits):
-            print(result, trait)
             mlflow.log_metric(f"R2_{trait}", result)
         mlflow.log_metric("R2_mean", results.mean())
         
