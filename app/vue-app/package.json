@@ -8,13 +8,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "6.4.0",
+    "@fortawesome/free-brands-svg-icons": "6.4.0",
+    "@fortawesome/free-regular-svg-icons": "6.4.0",
+    "@fortawesome/free-solid-svg-icons": "6.4.0",
+    "@fortawesome/vue-fontawesome": "3.0.3",
+    "ace-builds": "1.20.0",
     "axios": "1.2.4",
     "echarts": "5.4.2",
     "lodash": "4.17.21",
     "vue": "3.2.45",
     "vue-axios": "3.5.2",
     "vue-router": "4.1.6",
-    "vue-select": "^4.0.0-beta.6"
+    "vue-select": "4.0.0-beta.6",
+    "vue3-easy-data-table": "1.5.42"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "4.0.0",
