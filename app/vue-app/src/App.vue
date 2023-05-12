@@ -3,18 +3,14 @@
     <div class="wrapper">
       <nav>
         <RouterLink class="app-link" :class="{active: $route.path=='/'}"  :to="{name: 'home'}">  
-          Home        
+          <font-awesome-icon :icon="['fas', 'house']"/> Home 
         </RouterLink>
-        <RouterLink class="app-link" :class="{active: $route.path.includes('/pca')}" :to="{name: 'pca'}">
-          PCA
+        <RouterLink class="app-link" :class="{active: $route.path.includes('/create')}" :to="{name: 'create'}">
+          <font-awesome-icon :icon="['fas', 'pen-to-square']" /> Create
         </RouterLink>
-        <RouterLink class="app-link" :class="{active: $route.path.includes('/regression')}" :to="{name: 'regression'}">
-          Regression
-        </RouterLink>
-        <RouterLink class="app-link" :class="{active: $route.path.includes('/classifier')}" :to="{name: 'classifier'}">
-          Classifier
-        </RouterLink>
-        
+        <RouterLink class="app-link" :class="{active: $route.path.includes('/dashboards')}" :to="{name: 'dashboards'}">
+          <font-awesome-icon :icon="['fas', 'chalkboard']"/> Dashboards
+        </RouterLink>   
       </nav>
     </div>
   </header>
@@ -39,6 +35,7 @@
 
 
 <style lang="scss">
+
   .wrapper {
     margin-top: 2rem;
     margin-bottom: 2rem;

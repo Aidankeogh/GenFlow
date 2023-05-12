@@ -1,0 +1,4 @@
+positive_class,true_negatives,false_positives,false_negatives,true_positives,example_count,accuracy_score,recall_score,precision_score,f1_score,roc_auc,precision_recall_auc
+0,26,0,0,19,45,1.0,1.0,1.0,1.0,1.0,1.0
+1,32,0,0,13,45,1.0,1.0,1.0,1.0,1.0,1.0
+2,32,0,0,13,45,1.0,1.0,1.0,1.0,1.0,1.0
