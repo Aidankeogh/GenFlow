@@ -1,4 +1,4 @@
-name: XGBoost
+name: XGBRegressor
 import_module: xgboost
 params:
     booster: "gbtree"
