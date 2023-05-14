@@ -65,7 +65,7 @@
             return {
                 tableSpec: JSON.stringify(this.intialTableSpec, null, '\t'),
                 loadOptions: [],
-                loadValue: {},
+                loadValue: null,
                 saveAs: ''
             }
         },
@@ -115,8 +115,8 @@
                 })
             },
             loadSetting(){
-                if(!this.loadValue.value){
-                    alert('No Setting Selected')
+                if(!this.loadValue){
+                    this.tableSpec = JSON.stringify(this.intialTableSpec, null, '\t');
                     return;
                 }
                 this.axios.get(`/load-setting/${this.loadValue.value}`).then(data => {
@@ -125,7 +125,6 @@
                     alert('Failed To Get Settings');
                     console.log(error);
                 })
-
             },
             deleteSetting(){
                 if(!confirm('Do you really want to delete this setting ?')){
