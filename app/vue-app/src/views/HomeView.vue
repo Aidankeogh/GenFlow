@@ -63,12 +63,13 @@
       return {
         res: {},
         tableSpec: {
+          'exp_ids': [],
+          "get_params": true,
+          "get_metrics": true,
           "show": [
             'ix', 'exp_id', 'exp_name', 'exp_created', 'run_id', 'run_name', 'run_start', 'run_end',
             'param_test_size', 'metric_mean_squared_error'
           ],
-          "params": false,
-          "metrics": true,
           "rename": {
             'ix': 'Index',
             'exp_id': 'Emperiment Id',
