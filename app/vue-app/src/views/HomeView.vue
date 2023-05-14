@@ -1,11 +1,23 @@
 <template>
   <ft-container>
     <template #title>
-      <label> Experiments Table</label>
-      <label @click="showModal.config=true" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'gear']" /></label>
-      <!-- <label class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'floppy-disk']" /></label> -->
-      <label class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'file-csv']" /></label>
-
+      <span class="ft-d-flex">
+        <label> Experiments Table</label>
+        <label @click="showModal.config=true" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'gear']" /></label>
+        <label @click="downloadData" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'file-csv']" /></label>
+      </span>
+      <span class="ft-d-flex ft-pt-2" style="width:250px;">
+        <v-select
+          class="ft-w-100" 
+            v-if="loadOptions"
+            v-model:modelValue="loadValue"
+            :options="loadOptions">
+            <template #no-options="{ search, searching, loading }">
+                No Data Setting Created
+            </template>
+        </v-select>
+        <button @click="loadSetting" :disabled="validSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Load</button>
+      </span>
     </template>
     <div v-if="res.rows">
       <easy-data-table
@@ -50,7 +62,26 @@
   import Vue3EasyDataTable from 'vue3-easy-data-table';
   import RowDataModal from '../components/structures/homeModals/RowDataModal.vue';
   import ConfigModal from '../components/structures/homeModals/ConfigModal.vue';
+  import { downloadCSV } from '../utils/downloadCSV'; 
 
+  const defaultTableSpec = {
+    'exp_ids': [],
+    "get_params": true,
+    "get_metrics": true,
+    "show": [
+      'ix', 'exp_id', 'exp_name', 'exp_created', 'run_id', 'run_name', 'run_start', 'run_end'
+    ],
+    "rename": {
+      'ix': 'Index',
+      'exp_id': 'Emperiment Id',
+      'exp_name': 'Experiment Name',
+      'exp_created': 'Experiment Created',
+      'run_id': 'Run Id',
+      'run_name': 'Run Name',
+      'run_start': 'Run Start',
+      'run_end': 'Run End'
+    }
+  }
   export default {
     name: 'HomeView',
     components:{
@@ -62,36 +93,23 @@
     data(){
       return {
         res: {},
-        tableSpec: {
-          'exp_ids': [],
-          "get_params": true,
-          "get_metrics": true,
-          "show": [
-            'ix', 'exp_id', 'exp_name', 'exp_created', 'run_id', 'run_name', 'run_start', 'run_end',
-            'param_test_size', 'metric_mean_squared_error'
-          ],
-          "rename": {
-            'ix': 'Index',
-            'exp_id': 'Emperiment Id',
-            'exp_name': 'Experiment Name',
-            'exp_created': 'Experiment Created',
-            'run_id': 'Run Id',
-            'run_name': 'Run Name',
-            'run_start': 'Run Start',
-            'run_end': 'Run End',
-            'metric_mean_squared_error': "MSQ",
-            'param_test_size': 'Test Size'
-          }
-        },
+        tableSpec: JSON.parse(JSON.stringify(defaultTableSpec)),
         error: false,
         success: false,
         showModal: {
           'rowData': false,
           'config': false
         },
+        loadValue: null,
+        loadOptions: [],
         selectedRow: {},
-        selectedRowData: {}
+        selectedRowData: {},
+        
       }
+    },
+    created(){
+      this.loadTable();
+      this.getSettings();
     },
     methods:{
       loadTable(){
@@ -102,6 +120,27 @@
           this.error = true;
           this.res = error;
         });
+      },
+      getSettings(){
+          this.axios.get(`/get-settings`).then(data => {
+              this.loadOptions = data.data.settings;
+          }).catch(error => {
+              alert('Failed To Get Settings');
+          })
+      },
+      loadSetting(){
+          if(!this.loadValue){
+            this.tableSpec = JSON.parse(JSON.stringify(defaultTableSpec));
+            this.loadTable();
+            return;
+          }
+          this.axios.get(`/load-setting/${this.loadValue.value}`).then(data => {
+              this.tableSpec = data.data.setting;
+              this.loadTable();
+          }).catch(error => {
+              alert('Failed To Get Settings');
+              console.log(error);
+          })
       },
       showRow(row){
         this.selectedRow = row;
@@ -116,10 +155,12 @@
         }).catch(error => {
           this.res = error;
         });
+      },
+      downloadData(){
+        if(this.res.rows){
+          downloadCSV(this.res.rows);
+        }
       }
-    },
-    created(){
-      this.loadTable()
     }
   };
 </script>
