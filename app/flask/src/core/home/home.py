@@ -43,10 +43,12 @@ def get_df(params={}):
     exps = [
         d
         for d in dir_list 
-        if len(os.listdir(f'{ml_folder}/{d}')) > 1
-        if d[0] != '.'
+        if len(os.listdir(f'{ml_folder}/{d}')) > 1 and d[0] != '.'
     ]
-    
+    spec_exp_ids = params.get('exp_ids', [])
+    if spec_exp_ids:
+        exps = [exp for exp in exps if exp in spec_exp_ids]
+
     data = []
     for exp in exps:
         exp_fields = extract_exp_fields(exp)
@@ -56,11 +58,11 @@ def get_df(params={}):
                 continue
             run_fields = extract_run_fields(exp, run)
             
-            if 'params' in params:
+            if params.get('get_params'):
                 run_params = {f'param_{k}': v for k, v in get_params(exp, run).items()}
                 run_fields = {**run_fields, **run_params}
 
-            if 'metrics' in params:
+            if params.get('get_metrics'):
                 run_metrics = {f'metric_{k}': v for k, v in get_metrics(exp, run).items()}
                 run_fields = {**run_fields, **run_metrics}
 
