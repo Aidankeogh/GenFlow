@@ -16,15 +16,15 @@
                                 No Data Setting Created
                             </template>
                         </v-select>
-                        <button @click="loadSetting" :disabled="validSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Load</button>
-                        <button @click="deleteSetting" :disabled="validSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-danger "><font-awesome-icon :icon="['fas', 'trash-can']" /></button>
+                        <button @click="loadSetting" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Load</button>
+                        <button @click="deleteSetting" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-danger "><font-awesome-icon :icon="['fas', 'trash-can']" /></button>
                     </span>
                 </span>
                 <span style="min-width: 340px" class="ft-d-flex ft-flex-column ft-w-50 ft-mt-2">
                     <label class="ft-mb-1" style="font-weight: bold;">Save Setting As</label>
                     <span class="ft-d-flex">
                         <ft-input v-model:modelValue="saveAs"  class="ft-w-50"></ft-input>
-                        <button @click="saveSettings" :disabled="validSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Save</button>
+                        <button @click="saveSettings" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Save</button>
                     </span>
                 </span>
             </div>
@@ -38,7 +38,7 @@
                 width="100%">
             </ft-ace>
             <div class="ft-d-flex ft-justify-content-center ft-mt-3">
-                <button @click="parseSpec" :disabled="validSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft ft-w-50"> Apply</button>
+                <button @click="parseSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft ft-w-50"> Apply</button>
             </div>
         </div>
     </ft-modal>
@@ -49,8 +49,8 @@
 <script>
     import FtModal from '@/components/utils/ft-modal/FtModal.vue';
     import FtAce from '../../utils/ft-ace/FtAce.vue';
-    import FtInput
-     from '../../utils/ft-input/FtInput.vue';
+    import FtInput from '../../utils/ft-input/FtInput.vue';
+    
     export default {
         name: 'config-modal',
         components:{
