@@ -1,43 +1,46 @@
 <template>
     <ft-container>
-      <template #title><label> Create Page</label></template>
-      <div v-if="!res.success" class="resp-div"> Server Response: {{JSON.stringify(res)}}</div>
+      <template #title>
+        <span class="ft-d-flex">
+          <label> Create Dashboard</label>
+          <label @click="showModal.config=true" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'gear']" /></label>
+          <label @click="addComp" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'circle-plus']" /></label>
+        </span>
+      </template>
+      <!-- <div v-if="!res.success" class="resp-div"> Server Response: {{JSON.stringify(res)}}</div> -->
       <div class="ft-chart" v-if="res.success">
-        <span>Aloha</span>
+        
       </div>
       <div>
-        Create
+        <ft-grid-layout ref="ftGrid"></ft-grid-layout>
       </div>
     </ft-container>
   </template>
 
   <script>
     import FtContainer from '@/components/utils/ft-container/FtContainer.vue';
-
+    import FtGridLayout from '../components/structures/ft-grid-layout/FtGridLayout.vue'; 
 
     export default {
       name: 'create-view',
       components: {
-        FtContainer
+        FtContainer,
+        FtGridLayout
       },
       data(){
         return {
           res: {},
-          custom: {}
+          custom: {},
+          showModal: {
+            config: false,
+            addComponent: false
+          }
         }
       },
-      created(){
-        // this.get_piles()
-      },
       methods:{
-        // get_piles(){
-        //   this.axios.get('/piles',  {params: {'admin1': null}}).then(data => {
-        //   this.custom = data.data.custom;
-        //   this.res = {'success': true };
-        //   }).catch(error => {
-        //     this.res = error;
-        //   });
-        // }
+        addComp(){
+          this.$refs.ftGrid.addComp();
+        }
       }
     };
   </script>
