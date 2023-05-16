@@ -2,9 +2,11 @@
     <div>
         <grid-layout
             v-model:layout="layout"
-            :col-num="24"
-            :row-height="10"
+            :col-num="modelValue.colNum"
+            :row-height="modelValue.rowHeight"
             :vertical-compact="false"
+            :is-draggable="mode=='create'"
+            :is-resizable="mode=='create'"
         >
             <template #default="{ gridItemProps }">
                 <grid-item 
@@ -16,7 +18,12 @@
                     :h="item.h"
                     :i="item.i"
                     >
-                    <ft-grid-item @delete="deleteComp(item.i)" @edit="editComp(item.i)" :comp="item.comp">
+                    <ft-grid-item 
+                        @delete="deleteComp(item.i)"
+                        @edit="editComp(item.i)"
+                        :comp="item.comp"
+                        :mode="mode"
+                    >
                     </ft-grid-item>
                 </grid-item>
             </template>
@@ -43,6 +50,12 @@
             FtGridItem,
             itemModal
         },
+        props:{
+            modelValue:{
+                required: true
+            },
+            mode:{default: 'create'}
+        },
         computed:{
             maxY(){
                 let maxY = 0;
@@ -56,12 +69,18 @@
             return {
                 itemModalMode: 'create',
                 initialItem: {},
-                layout: [
-                    { x: 0, y: 0, w: 6, h: 10, i: 0, comp: {component: 'ft-markdown', bind: {'markdown': '### Aloha !'}}  }
-                ],
+                layout: this.modelValue.layout,
                 showModal:{
                     component: false
                 }
+            }
+        },
+        watch:{
+            modelValue: {
+                handler(newValue, oldValue) {
+                    this.layout = this.modelValue.layout;
+                },
+                deep: true
             }
         },
         methods:{
@@ -105,3 +124,9 @@
         }
     }
 </script>
+
+<style>
+    .vue-grid-item {
+        background-color: transparent !important;
+    }
+</style>

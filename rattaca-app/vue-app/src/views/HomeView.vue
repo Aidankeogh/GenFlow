@@ -60,8 +60,8 @@
 <script>
   import FtContainer from '@/components/utils/ft-container/FtContainer.vue';
   import Vue3EasyDataTable from 'vue3-easy-data-table';
-  import RowDataModal from '../components/structures/homeModals/RowDataModal.vue';
-  import ConfigModal from '../components/structures/homeModals/ConfigModal.vue';
+  import RowDataModal from '../components/structures/home-modals/RowDataModal.vue';
+  import ConfigModal from '../components/structures/home-modals/ConfigModal.vue';
   import { downloadCSV } from '../utils/downloadCSV'; 
 
   const defaultTableSpec = {

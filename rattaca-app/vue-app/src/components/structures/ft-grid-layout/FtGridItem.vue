@@ -1,6 +1,6 @@
 <template>
-    <div class="ft-grid-item ft-w-100" style="height:100%; min-width:100%">
-        <div class="ft-d-flex ft-justify-content-end ft-align-items-center">
+    <div class="ft-grid-item ft-w-100 ft-p-1" style="height:100%; min-width:100%">
+        <div v-if="mode=='create'" class="ft-d-flex ft-justify-content-end ft-align-items-center">
             <div class="ft-d-flex ft-flex-wrap ft-mr-2 ft-mt-2">
                 <label @click="$emit('edit')" class="ft-hover-text ft-pl-2">
                     <font-awesome-icon :icon="['fas', 'pen-to-square']" />
@@ -24,7 +24,8 @@
             FtMarkdown
         },
         props:{
-            comp:{required:true}
+            comp:{required:true},
+            mode:{default: 'create'}
         }
     }
 </script>

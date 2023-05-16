@@ -91,7 +91,6 @@
             },
             getSettings(){
                 this.axios.get(`/get-settings`).then(data => {
-                    console.log(data);
                     this.loadOptions = data.data.settings;
                 }).catch(error => {
                     alert('Failed To Get Settings');
