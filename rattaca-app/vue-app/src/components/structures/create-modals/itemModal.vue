@@ -15,14 +15,37 @@
                     ></v-select>
                 </span>
             </div>
-            <ft-ace 
-                @init="initEditor"
-                v-model:value="markdownCode"
-                class="ft-ace-editor"
-                lang="markdown"
-                height="380px"
-                width="100%">
-            </ft-ace>
+            <div v-if="selVal.value=='ft-markdown'">
+                <ft-ace 
+                    @init="initEditor"
+                    v-model:value="markdownCode"
+                    class="ft-ace-editor"
+                    lang="markdown"
+                    height="380px"
+                    width="100%">
+                </ft-ace>
+            </div>
+            <div v-if="selVal.value=='ft-echartsJs'">
+                <span class="ft-d-flex ft-flex-column ft-w-50 ft-mb-3">
+                    <label class="ft-mb-1" style="font-weight: bold;"> Fetch Data Settings</label>
+                    <v-select 
+                        class="ft-w-50"
+                        ref="vSelectMultiple"
+                        v-model:modelValue="dataValues"
+                        :options="loadOptions"
+                        :clearable="true"
+                        :multiple="true"
+                    ></v-select>
+                </span>
+                <ft-ace 
+                    @init="initEditor"
+                    v-model:value="jsCode"
+                    class="ft-ace-editor"
+                    lang="javascript"
+                    height="380px"
+                    width="100%">
+                </ft-ace>
+            </div>
             <div class="ft-d-flex ft-justify-content-center ft-mt-3">
                 <button @click="confirmChanges" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft ft-w-50">
                     {{ modeTitle }}
@@ -38,8 +61,31 @@
     import _ from 'lodash';
 
     const compRef = {
-        'ft-markdown': 'Markdown'
+        'ft-markdown': 'Markdown',
+        'ft-echartsJs': 'Echarts Js'
     }
+
+    const defaultJs = `option = {
+  title: {
+    text: 'Aloha Echarts',
+    left: 'center'
+  },
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [150, 230, 224, 218, 135, 147, 260],
+      type: 'line'
+    }
+  ]
+};
+return option;
+`
 
     export default {
         name: 'item-modal',
@@ -60,13 +106,19 @@
                 return titleRef[this.mode]
             }
         },
+        mounted(){
+            this.getSettings()
+        },
         data(){
             return {
+                loadOptions: [],
+                dataValues: _.get(this.initialItem, 'comp.bind.dataValues', []),
                 selVal: {
                     'value': _.get(this.initialItem, 'comp.component', 'ft-markdown'),
                     'label' : compRef[_.get(this.initialItem, 'comp.component', 'ft-markdown')],
                 }, 
                 markdownCode: _.get(this.initialItem, 'comp.bind.markdown', '### This is a Markdown'),
+                jsCode: _.get(this.initialItem, 'comp.bind.js', defaultJs),
                 compOptions: Object.keys(compRef).map(key => {
                     return {value: key, label: compRef[key]}
                 })
@@ -96,10 +148,25 @@
                             component: this.selVal.value,
                             bind: {markdown: this.markdownCode}
                         }
+                    case 'ft-echartsJs':
+                        return {
+                            component: this.selVal.value,
+                            bind: {
+                                js: this.jsCode,
+                                dataValues: this.dataValues
+                            }
+                        }
                     default:
                         return null;
                 }
-            }
+            },
+            getSettings(){
+                this.axios.get(`/get-settings`).then(data => {
+                    this.loadOptions = data.data.settings;
+                }).catch(error => {
+                    alert('Failed To Get Settings');
+                })
+            },
         }
     }
 </script>

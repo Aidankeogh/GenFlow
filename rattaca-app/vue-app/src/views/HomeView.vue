@@ -2,7 +2,7 @@
   <ft-container>
     <template #title>
       <span class="ft-d-flex">
-        <label> Experiments Table</label>
+        <label> Experiments Database</label>
         <label @click="showModal.config=true" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'gear']" /></label>
         <label @click="downloadData" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'file-csv']" /></label>
       </span>
@@ -16,7 +16,7 @@
                 No Data Setting Created
             </template>
         </v-select>
-        <button @click="loadSetting" :disabled="validSpec" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Load</button>
+        <button @click="loadSetting" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Load</button>
       </span>
     </template>
     <div v-if="res.rows">

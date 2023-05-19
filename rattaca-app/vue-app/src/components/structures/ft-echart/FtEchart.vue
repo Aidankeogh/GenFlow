@@ -16,7 +16,8 @@
   export default {
     name: 'ft-echart',
     props: {
-      echartOption: {required:true}
+      echartOption: {required:true},
+      itemId: {default: 'echart'}
     },
     created(){
       echarts.registerTheme('ft-theme', FtTheme);
@@ -26,9 +27,12 @@
     },  
     methods: {
       initialize(){
-        myChart = echarts.init(this.$refs.my_echart, 'ft-theme');        
-        myChart.setOption(this.echartOption);
+        myChart[this.itemId] = echarts.init(this.$refs.my_echart, 'ft-theme');        
+        myChart[this.itemId].setOption(this.echartOption);
         this.$emit('init', myChart);
+      },
+      resize(){
+        myChart[this.itemId].resize()
       }
     }
   }

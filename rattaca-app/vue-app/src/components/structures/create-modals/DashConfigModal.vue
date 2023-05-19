@@ -72,6 +72,9 @@
         created(){
             this.getSettings()
         },
+        mounted(){
+            this.dashSpec = JSON.stringify(this.intialDashSpec, null, '\t');
+        },
         methods: {
             initEditor(editor){
                 editor.renderer.setScrollMargin(3, 0);

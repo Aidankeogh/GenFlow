@@ -10,6 +10,7 @@
         >
             <template #default="{ gridItemProps }">
                 <grid-item 
+                    @resized="resize"
                     v-for="item in layout" :key="item.i"  
                     v-bind="gridItemProps"
                     :x="item.x"
@@ -19,10 +20,12 @@
                     :i="item.i"
                     >
                     <ft-grid-item 
+                        :ref="'gridItem' + item.i"
                         @delete="deleteComp(item.i)"
                         @edit="editComp(item.i)"
                         :comp="item.comp"
                         :mode="mode"
+                        :itemId="'item' + item.i"
                     >
                     </ft-grid-item>
                 </grid-item>
@@ -45,7 +48,7 @@
     import itemModal from '../create-modals/itemModal.vue';
 
     export default {
-        name: 'ft-frid-layout',
+        name: 'ft-grid-layout',
         components:{
             FtGridItem,
             itemModal
@@ -64,6 +67,9 @@
                 })
                 return maxY + 1;
             }
+        },
+        mounted(){
+            this.resizeAll();
         },
         data () {
             return {
@@ -84,6 +90,15 @@
             }
         },
         methods:{
+            resize(index){
+                let itemName = 'gridItem' + index;
+                this.$refs[itemName][0].resize();
+            },
+            resizeAll(){
+                this.$nextTick(() => {
+                    this.layout.forEach(item => this.resize(item.i));
+                })
+            },
             addComp(){
                 this.initialItem = {
                     x: 0,
@@ -98,6 +113,10 @@
             },
             addItem(item){
                 this.layout.push(item);
+                this.$emit('update:modelValue', {
+                    ...this.modelValue,
+                    layout: this.layout
+                })
             },
             editComp(itemI){
                 this.initialItem = this.layout[itemI]
@@ -106,6 +125,10 @@
             },
             editItem(item){
                 this.layout[item.i] = item;
+                this.$emit('update:modelValue', {
+                    ...this.modelValue,
+                    layout: this.layout
+                })
             },
             deleteComp(itemI){
                 let newLayout = [];
@@ -120,6 +143,10 @@
                     i ++;
                 });
                 this.layout = newLayout;
+                this.$emit('update:modelValue', {
+                    ...this.modelValue,
+                    layout: this.layout
+                })
             }
         }
     }

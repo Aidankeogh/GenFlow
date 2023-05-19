@@ -14,7 +14,7 @@
       <dash-config-modal v-model:intialDashSpec="dashboardInitialValue" v-if="showModal.config" @close="showModal.config=false"></dash-config-modal>
       <div ref="fullscreenElement">
         <div v-if="isFullScreen">
-          <ft-grid-layout v-model:modelValue="dashboardInitialValue" mode="view"></ft-grid-layout>
+          <ft-grid-layout ref="gridLayout" v-model:modelValue="dashboardInitialValue" mode="view"></ft-grid-layout>
         </div>
       </div>
     </div>
@@ -60,7 +60,11 @@
       },
       toggleFullscreen() {
         const element = this.$refs.fullscreenElement;
-        element.requestFullscreen().catch(err => {
+        element.requestFullscreen().then(() => {
+          this.$nextTick(() => 
+            setTimeout(() => this.$refs.gridLayout.resizeAll(), 200) 
+          );
+        }).catch(err => {
           console.error(`Error attempting to enable fullscreen: ${err.message}`);
         });
       },

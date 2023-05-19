@@ -49,7 +49,6 @@
         this.contentBackup = this.value;
   
         editor.on('change',function () {
-          console.log('mahalo')
           let content = editor.getValue();
           vm.$emit('update:value', content);
           vm.contentBackup = content;
