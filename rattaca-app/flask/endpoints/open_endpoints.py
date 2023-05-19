@@ -5,6 +5,7 @@ from utils.api_utils.api_utils import endpoint_handler
 from src.settings import settings as ST
 from src.core.home import home
 from src.core.s_data import s_data
+from src.core.s_dash import s_dash
 
 
 @app.route("/home")
@@ -46,4 +47,32 @@ def get_data_settings():
 @endpoint_handler
 def load_data_setting(setting_name):
     res = s_data.load_setting(setting_name)
+    return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}
+
+# dash
+@app.route("/save-dash", methods=['POST'])
+@endpoint_handler
+def save_dash_setting():
+    res = s_dash.save_setting(request.json)
+    return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}
+
+
+@app.route("/delete-dash", methods=['POST'])
+@endpoint_handler
+def delete_dash_setting():
+    res = s_dash.delete_setting(request.json)
+    return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}
+
+
+@app.route("/get-dashs")
+@endpoint_handler
+def get_dashsettings():
+    res = s_dash.get_settings()
+    return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}
+
+
+@app.route("/load-dash/<setting_name>")
+@endpoint_handler
+def load_dash_setting(setting_name):
+    res = s_dash.load_setting(setting_name)
     return {ST.HTTP_STATUS: 200, ST.PAYLOAD: res}

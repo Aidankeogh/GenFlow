@@ -17,10 +17,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faHouse, faChalkboard, faPenToSquare, faGear, faFileCsv, faFloppyDisk, faTrashCan, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faChalkboard, faPenToSquare, faGear, faFileCsv, faFloppyDisk, faTrashCan, faCirclePlus, faExpand } from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
-library.add(faHouse, faChalkboard, faPenToSquare, faGear, faFileCsv, faFloppyDisk, faTrashCan, faCirclePlus)
+library.add(faHouse, faChalkboard, faPenToSquare, faGear, faFileCsv, faFloppyDisk, faTrashCan, faCirclePlus, faExpand)
 
 
 const app = createApp(App)
