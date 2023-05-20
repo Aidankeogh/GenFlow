@@ -9,5 +9,5 @@ params:
     max_delta_step: 0
     lambda: 0.5
     alpha: 0.5
-    subsample: 0.5
+    subsample: 1
     

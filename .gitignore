@@ -2,6 +2,8 @@
 lightning_logs/
 data/
 multirun/
+ratgenes_pruned
+notebooks
 
 #DS Store
 .DS_Store

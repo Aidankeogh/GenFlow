@@ -26,9 +26,13 @@ def my_app(cfg: DictConfig) -> None:
         results = evaluate_model(model, X_val, y_val)
         
         # mlflow log all results
-        for result, trait in zip(results, cfg.dataset.params.select_traits):
+        traits = list(Y_pheno.columns)
+        data_shape = X_geno.shape
+        for result, trait in zip(results, traits):
             mlflow.log_metric(f"R2_{trait}", result)
         mlflow.log_metric("R2_mean", results.mean())
+        mlflow.log_metric("Train_Shape", data_shape)
+
         
         print(results)
 

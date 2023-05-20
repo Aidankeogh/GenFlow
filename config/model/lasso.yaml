@@ -2,4 +2,5 @@ name: Lasso
 import_module: sklearn.linear_model
 params: 
     alpha: 1
+    max_iter: 10000
     fit_intercept: True
