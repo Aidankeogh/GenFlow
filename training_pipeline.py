@@ -32,6 +32,7 @@ def my_app(cfg: DictConfig) -> None:
             mlflow.log_metric(f"R2_{trait}", result)
         mlflow.log_metric("R2_mean", results.mean())
         mlflow.log_metric("Train_Shape", data_shape)
+
         
         print(results)
 
