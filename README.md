@@ -1,11 +1,34 @@
 # rattaca
-Machine learning on rat genes
+The RATTACA project aims to use genetic prediction to identify rats to identify rats that would exhibit extreme phenotypes for addiction-related traits. This repository creates a machine learning pipeline to accelerate genome-wide association studies (GWAS) on the collected rat genotype and phenotype data. 
 
 ## Setup
 
- connect to https://narrows-gpu.sdsc.edu
+The training pipeline was built to use the following technologies:
 
- run `conda activate capstone-base`
+<!-- table of requirements -->
+
+The pipeline has been tested with Python 3.X. <!-- add python versions that work -->
+
+This repository provides files to setup either a Python venv or conda environment for running the training pipeline.
+
+### Python venv
+
+To use Python venv you first create the venv, activate, and install the pipeline dependencies with the requirements file.
+
+```
+python -m venv rattaca-venv
+source rattaca-venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Conda environment
+
+To use conda environments you can create a new environment with the included yaml file.
+
+```
+conda create -n rattaca-venv -r environment.yml
+conda activate rattaca-venv
+```
 
 ## Running the trainer
 
