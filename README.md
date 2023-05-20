@@ -16,8 +16,8 @@ This repository provides files to setup either a Python venv or conda environmen
 To use Python venv you first create the venv, activate, and install the pipeline dependencies with the requirements file.
 
 ```
-python -m venv rattaca-venv
-source rattaca-venv/bin/activate
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
