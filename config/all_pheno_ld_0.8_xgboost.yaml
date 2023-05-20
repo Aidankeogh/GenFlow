@@ -1,0 +1,11 @@
+experiment_name: all_pheno_ld_0.8_xgboost
+
+defaults:
+    - dataset: dataset_all_pheno_ld_0.8
+    - model: xgboost
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    params:
+      dataset.gwas_p_value: 1, 0.8, 0.5, 0.2, 0.05

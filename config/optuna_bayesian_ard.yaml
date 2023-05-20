@@ -1,0 +1,25 @@
+# A test that sweeps over the multiples parameters for a bayesian ARD model.
+experiment_name: optuna_bayesian_ard
+
+defaults:
+    - dataset: dataset_cluster
+    - model: bayesian_ard
+    - override hydra/sweeper: optuna
+    - override hydra/sweeper/sampler: tpe
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    sampler:
+      seed: 123
+    direction: maximize
+    study_name: ${experiment_name}
+    storage: null
+    n_trials: 100
+    n_jobs: 1
+    params:
+        model.params.tol: interval(0, 0.1)
+        model.params.alpha_1: interval(0, 0.1)
+        model.params.alpha_2: interval(0, 0.1)
+        model.params.lambda_1: interval(0, 0.1)
+        model.params.lambda_2: interval(0, 0.1)

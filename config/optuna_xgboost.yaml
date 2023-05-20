@@ -1,4 +1,6 @@
 # A test that sweeps over the multiples parameters for a xgboost model.
+experiment_name: optuna_xgboost
+
 defaults:
     - dataset: dataset_cluster
     - model: xgboost
@@ -11,16 +13,16 @@ hydra:
     sampler:
       seed: 123
     direction: maximize
-    study_name: optuna_xgboost
+    study_name: ${experiment_name}
     storage: null
     n_trials: 10
-    n_jobs: -1
+    n_jobs: 1
     params:
       model.params.eta: interval(0, 1)
       model.params.gamma: interval(0, 10)
-      model.params.max_depth: interval(0, 10)
+      model.params.max_depth: int(interval(0, 10))
       model.params.min_child_weight: interval(0, 10)
-      model.params.max_delta_step: interval(0, 10)
+      model.params.max_delta_step: int(interval(0, 10))
       model.params.lambda: interval(0, 10)
       model.params.alpha: interval(0, 10)
       model.params.subsample: interval(0.1, 1)
