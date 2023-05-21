@@ -1,5 +1,5 @@
 experiment_name: default
 
 defaults:
-    - dataset: loco_clean
+    - dataset: dataset_cluster
     - model: linear

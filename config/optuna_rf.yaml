@@ -1,0 +1,24 @@
+# A test that sweeps over parameters for a Random Forest regression model.
+experiment_name: optuna_rf
+
+defaults:
+    - dataset: dataset_cluster
+    - model: random_forest
+    - override hydra/sweeper: optuna
+    - override hydra/sweeper/sampler: tpe
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    sampler:
+      seed: 123
+    direction: maximize
+    study_name: ${experiment_name}
+    storage: null
+    n_trials: 10
+    n_jobs: 1
+    params:
+      model.params.learning_rate: 1
+      model.params.colsample_bynode: interval(0.1, 0.9)
+      model.params.max_depth: int(interval(1, 10))
+      model.params.subsample: interval(0.1, 0.9)
