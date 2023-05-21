@@ -31,7 +31,7 @@ def my_app(cfg: DictConfig) -> None:
         for result, trait in zip(results, traits):
             mlflow.log_metric(f"R2_{trait}", result)
         mlflow.log_metric("R2_mean", results.mean())
-        mlflow.log_metric("Train_Shape", data_shape)
+        mlflow.log_metric("Num_Variants", data_shape[0])
 
         
         print(results)

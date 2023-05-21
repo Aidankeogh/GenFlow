@@ -1,0 +1,13 @@
+# This file is meant for testing the GWAS reduction because we thought there might be a bug
+
+experiment_name: test_gwas_reduce
+
+defaults:
+    - dataset: dataset_all_pheno_ld_0.05
+    - model: elastic_net
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    params:
+      dataset.gwas_p_value: 1, 0.8, 0.2, 0.05
