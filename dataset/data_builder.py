@@ -63,7 +63,7 @@ class training_data(object):
             ds_gwas = ds
 
         self.phenotypes = phenotypes
-        self.filter_uknowns = filter_unknowns
+        self.filter_unknowns = filter_unknowns
         self.ds_known = ds_known
         self.ds_gwas = ds_gwas
 
@@ -71,9 +71,9 @@ class training_data(object):
     # Return matrix format of the genotypes data filtered by gwas_pvalues
     def gwas_filtered(self, gwas_pvalue = 0.05):
         
-        # Only carry out GWAS filtering if filter_unknowns it True and gwas_pvalue is not None
-        if self.filter_unknowns and gwas_pvalue:
-            print("Filtering based on GWAS statisical association ...")
+        # Only carry out GWAS filtering if filter_unknowns is True gwas_pvalue is not None
+        if (self.filter_unknowns and gwas_pvalue):
+            print("Filtering based on GWAS statisical association with p-value", gwas_pvalue)
             ds_filtered = self.ds_gwas.sel(variants=((self.ds_gwas.variant_linreg_p_value < gwas_pvalue).any('traits')))
             print("Done filtering based on GWAS\n")
         else:

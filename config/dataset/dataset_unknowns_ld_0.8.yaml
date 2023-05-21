@@ -4,5 +4,5 @@ params:
     geno_fam: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.fam
     phenotypes: /scratch/capstone/phenotypes/pheno_chunk1.txt
     select_traits: ''
-    filter_unknowns: True
+    filter_unknowns: False
 gwas_p_value: 1

@@ -1,3 +1,5 @@
+# Config for including unknowns in data builder
+
 params:
     geno_bed: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.05.bed
     geno_bim: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.05.bim
