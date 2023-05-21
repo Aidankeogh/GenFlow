@@ -9,24 +9,10 @@ The training pipeline was built to use the following technologies:
 
 The pipeline has been tested with Python 3.X. <!-- add python versions that work -->
 
-This repository provides files to setup either a Python venv or conda environment for running the training pipeline.
-
-### Python venv
-
-To use Python venv you first create the venv, activate, and install the pipeline dependencies with the requirements file.
+This repository provides an environment file to setup a conda environment for running the training pipeline.
 
 ```
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Conda environment
-
-To use conda environments you can create a new environment with the included yaml file.
-
-```
-conda create -n rattaca-venv -r environment.yml
+conda env create -f environment.yml
 conda activate rattaca-venv
 ```
 
