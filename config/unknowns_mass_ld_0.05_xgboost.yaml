@@ -1,0 +1,7 @@
+# Run an experiment that includes unknowns in the genotype matrix
+
+experiment_name: unknowns_mass_ld_0.05_xgboost
+
+defaults:
+    - dataset: dataset_unknowns_mass_ld_0.05
+    - model: xgboost

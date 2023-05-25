@@ -1,0 +1,11 @@
+experiment_name: mass_ld_0.8_xgboost
+
+defaults:
+    - dataset: dataset_mass_ld_0.8
+    - model: xgboost
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    params:
+      dataset.gwas_p_value: 1, 0.05, 0.01, 0.001
