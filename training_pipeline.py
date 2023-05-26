@@ -9,6 +9,8 @@ from utils.mlflow_utils import log_params_from_omegaconf_dict
 import numpy as np
 import hashlib
 import mlflow
+import warnings
+warnings.filterwarnings("ignore")
 
 @hydra.main(version_base=None, config_path="config", config_name="config")
 def my_app(cfg: DictConfig) -> None:
@@ -33,8 +35,9 @@ def my_app(cfg: DictConfig) -> None:
         mlflow.log_metric("R2_mean", results.mean())
         mlflow.log_metric("Num_Variants", data_shape[0])
 
-        
-        print(results)
+        print("Data Shape:", data_shape, "\n")
+        print("R2 Results:", results)
+        print("------------------------------------------\n")
 
     return results.mean()
     
