@@ -1,0 +1,8 @@
+params:
+    geno_bed: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.2.bed
+    geno_bim: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.2.bim
+    geno_fam: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.2.fam
+    phenotypes: /scratch/capstone/phenotypes/pheno_chunk1.txt
+    select_traits: ''
+    filter_unknowns: True
+gwas_p_value: 1
