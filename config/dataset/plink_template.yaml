@@ -1,8 +1,9 @@
 genotypes:
     type: plink
-    bed: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.bed
-    bim: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.bim
-    fam: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.fam
+    prefix: /scratch/capstone/ratgenes_pruned
+    bed: ratgenes_pruned_0.8.bed
+    bim: ratgenes_pruned_0.8.bim
+    fam: ratgenes_pruned_0.8.fam
     gwas_p_value: 0.05
     dimensionality_reduction:
         name: PCA
