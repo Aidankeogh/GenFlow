@@ -19,7 +19,7 @@ def my_app(cfg: DictConfig) -> None:
         print(OmegaConf.to_yaml(cfg))
         log_params_from_omegaconf_dict(cfg)
 
-        X_geno, Y_pheno = training_data(**cfg.dataset.params).gwas_filtered(cfg.dataset.gwas_p_value)
+        X_geno, Y_pheno = training_data(**cfg.dataset).gwas_filtered(cfg.dataset.genotypes.gwas_p_value)
         X_train, X_val, y_train, y_val = train_test_split(X_geno, Y_pheno, test_size=0.20, random_state=42)
 
         model = train_model(X_train, y_train, cfg.model)

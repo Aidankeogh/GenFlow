@@ -16,14 +16,65 @@ class training_data(object):
     # Filter the genotypes data based on phenotypes labels, missing variants, and GWAS statistical association
     # Also needed is the phenotype data and a possible select list of traits to choose from.
     # NOTE: If filter_unknowns is set to False, GWAS filtering WILL NOT be carried out
-    def __init__(self, 
-        geno_bed = 'ratgenes_pruned/ratgenes_pruned_0.8.bed', 
-        geno_bim = 'ratgenes_pruned/ratgenes_pruned_0.8.bim', 
-        geno_fam = 'ratgenes_pruned/ratgenes_pruned_0.8.fam', 
-        phenotypes = 'phenotypes/pheno_loco_clean.txt', 
-        select_traits = ['loco_maxcent', 'loco_maxdis', 'loco_maxrear', 'loco_maxact'],
-        filter_unknowns = True):
+    def __init__(self, **kwargs):
 
+        # check that genotype file type is provided
+        try:
+            kwargs['genotypes']
+        except:
+            print('No genotype information defined.')
+            sys.exit(1)
+            
+        genotype_input = OmegaConf.create(kwargs['genotypes'])
+        print(type(genotype_input))
+        geno_hash = self.generate_hash(**genotype_input)
+        geno_hash_file = kwargs.genotypes.prefix+'/'+geno_hash+'.zarr'
+        
+        if os.path.exists(geno_hash_file):
+            X_geno = xr.open_zarr(geno_hash_file)
+            return(X_geno)
+        
+        # generate genotype hash
+        # match file_type and read files based on parameters
+        match kwargs.genotypes.type:
+            case 'vcf':
+                kwargs = OmegaConf.create(kwargs['genotypes'])
+                self.load_vcf(**kwargs)
+            case 'plink':
+                self.load_plink(**kwargs)
+            case _:
+                print("Currently only vcf and plink genotype file types are allowed.")
+                exit(1)
+        
+    def convert_omegaconf_to_dict(self, data):
+        if isinstance(data, DictConfig):
+            data = OmegaConf.to_container(data, resolve=True)
+        if isinstance(data, dict):
+            for key, value in data.items():
+                data[key] = self.convert_omegaconf_to_dict(value)
+        return data
+    
+    def generate_hash(self, **kwargs):
+        # Convert OmegaConf objects to dictionaries
+        kwargs = self.convert_omegaconf_to_dict(kwargs)
+
+        # Convert kwargs to a JSON string
+        kwargs_json = json.dumps(kwargs, sort_keys=True)
+
+        # Generate a hash using SHA-256 algorithm
+        hash_object = hashlib.sha256(kwargs_json.encode())
+
+        # Return the hexadecimal representation of the hash
+        return hash_object.hexdigest()
+
+    def load_vcf(self, **kwargs):
+        return
+    
+    def load_plink(self, **kwargs):
+        print(f' Kwargs: {kwargs}' )
+        # Read in plink version of genotypes
+        ds = plink.read_plink(bed_path = geno_bed, bim_path = geno_bim, fam_path = geno_fam)
+        ds = ds.set_index({"samples": "sample_id"})
         # Read in plink version of genotypes
         ds = plink.read_plink(bed_path = geno_bed, bim_path = geno_bim, fam_path = geno_fam)
         ds = ds.set_index({"samples": "sample_id"})
