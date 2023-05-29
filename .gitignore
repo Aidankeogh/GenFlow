@@ -2,6 +2,7 @@
 lightning_logs/
 data/
 multirun/
+mlruns/
 ratgenes_pruned
 notebooks
 

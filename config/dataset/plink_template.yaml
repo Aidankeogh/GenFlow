@@ -1,0 +1,22 @@
+genotypes:
+    type: plink
+    bed: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.bed
+    bim: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.bim
+    fam: /scratch/capstone/ratgenes_pruned/ratgenes_pruned_0.8.fam
+    gwas_p_value: 0.05
+    dimensionality_reduction:
+        name: PCA
+        import_module: sklearn.decomposition
+        params: 
+            n_components: 100
+            svd_solver: randomized
+phenotypes: 
+    type: csv
+    file: /scratch/capstone/phenotypes/pheno_loco_clean.txt
+    select_traits:
+      - 'loco_maxcent'
+      - 'loco_maxdis'
+      - 'loco_maxrear'
+      - 'loco_maxact'
+
+

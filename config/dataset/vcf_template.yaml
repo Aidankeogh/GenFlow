@@ -1,0 +1,22 @@
+genotypes:
+    type: vcf
+    file: Heterogenous-stock_n14780_10182022_QC_Sex_Het_pass_n13526.vcf.gz
+    prefix: /scratch/capstone/
+    gwas_p_value: 0.05
+    dimensionality_reduction:
+        name: PCA
+        import_module: sklearn.decomposition
+        params: 
+            
+            svd_solver: randomized
+            n_components: 100
+phenotypes: 
+    type: csv
+    file: /scratch/capstone/phenotypes/pheno_loco_clean.txt
+    select_traits:
+      - 'loco_maxcent'
+      - 'loco_maxdis'
+      - 'loco_maxrear'
+      - 'loco_maxact'
+
+

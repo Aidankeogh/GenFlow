@@ -1,5 +1,5 @@
 experiment_name: default
 
 defaults:
-    - dataset: dataset_cluster
+    - dataset: plink_template
     - model: linear
