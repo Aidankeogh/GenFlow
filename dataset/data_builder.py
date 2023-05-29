@@ -2,6 +2,10 @@
 
 # by Zach Wallace
 
+from omegaconf import DictConfig, OmegaConf
+import hashlib
+import json
+import os
 import sgkit as sg
 from sgkit.io import plink
 import pandas as pd
@@ -26,9 +30,9 @@ class training_data(object):
             sys.exit(1)
             
         genotype_input = OmegaConf.create(kwargs['genotypes'])
-        print(type(genotype_input))
         geno_hash = self.generate_hash(**genotype_input)
-        geno_hash_file = kwargs.genotypes.prefix+'/'+geno_hash+'.zarr'
+        geno_hash_file = kwargs['genotypes']['prefix']+'/'+geno_hash+'.zarr'
+        print(geno_hash_file)
         
         if os.path.exists(geno_hash_file):
             X_geno = xr.open_zarr(geno_hash_file)
@@ -36,7 +40,7 @@ class training_data(object):
         
         # generate genotype hash
         # match file_type and read files based on parameters
-        match kwargs.genotypes.type:
+        match kwargs['genotypes']['type']:
             case 'vcf':
                 kwargs = OmegaConf.create(kwargs['genotypes'])
                 self.load_vcf(**kwargs)
