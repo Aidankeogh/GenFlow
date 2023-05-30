@@ -1,4 +1,4 @@
-name: /narrows-trials/shared/conda-envs/capstone-base
+name: rattaca-env
 channels:
   - pytorch
   - nvidia
@@ -284,4 +284,3 @@ dependencies:
       - werkzeug==2.3.4
       - xarray==2022.3.0
       - zipp==3.15.0
-prefix: /narrows-trials/shared/conda-envs/capstone-base
