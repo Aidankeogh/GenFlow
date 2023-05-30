@@ -20,16 +20,38 @@ conda activate rattaca-venv
 
 This project uses hydra, the main entrypoint is training_pipeline.py
 
-To run the default example, run `python training_pipeline.py` from the root directory.
+To run the default example run the following from the root directory
 
-For an example running a custom config, try `python training_pipeline.py --config-name=optuna_test`, which runs config/optuna_test.yaml, an experiment using a Ridge Regression model.
+```
+python training_pipeline.py
+```
 
-See the folder `config/` for the list of our modeling experiment files. New experiments for new models can be run by creating a new config files and altering the parameter in the `--config-name` option.  The following describes how to go about configuring a specific trainining run
+For an example running a custom config, try 
 
-### Configuring the Data
+```
+python training_pipeline.py --config-name=optuna_test
+```
+This runs config/optuna_test.yaml, an experiment using a Ridge Regression model.
 
-To configure a training run that models on a specific version of Linkage Disequillibrium pruned data to a specific phenotypes dataset, one will first need to write a conifg file in the `config/dataset` folder.  Adjust `geno_bed`, `geno_bim`, and `'geno_fam` to call the specific genotypes dataset and adjust `phenotypes` to call the specific phenotypes dataset.  Adjusting `select_traits` will limit to certain phenotypes. Additionally, adjusting the `gwas_p_value` will adjust the variant reduction based on GWAS statistical association p-value to the input phenotypes, but this parameter can be swept when configuring an experiment.
+See the folder `config/` for the list of our modeling experiment files. New experiments for new models can be run by creating a new config files and altering the parameter in the `--config-name` option.  The following describes how to go about configuring a specific trainining run.
+
+### Step 1: Configuring the Data
+
+To configure a training run that models on a specific version of Linkage Disequillibrium pruned data to a specific phenotypes dataset, one will need to write a conifg file in the `config/dataset` folder.  Adjust `geno_bed`, `geno_bim`, and `geno_fam` to call the specific genotypes dataset and adjust `phenotypes` to call the specific phenotypes dataset.  Adjusting `select_traits` will limit to certain phenotypes. The `gwas_p_value` will adjust the variant reduction based on GWAS statistical association p-value to the input phenotypes, but this parameter can be swept when configuring an experiment.
 
 ![Alt text](screenshots/data_configure.png?raw=true)
+
+### Step 2: Configuring the Model
+
+To configure a training run that calls a specific type of Machine Learning model, such as an XGBoost, one will need to write a config file in the `config/models` folder and establish the default hyperparameters that can be called or adjusted when configuring an experiment.  Adjust the `import_module` to call the python Machine Learning module.  Custom use defined models are permitted so long they have .fit and .predict.  Adujust `name` to call the specific model from the module, such as XGBRegressor from the xgboost python module.  Adjsut `params` according to the authorized hyperparameters of the model.
+
+![Alt text](screenshots/model_configure.png?raw=true)
+
+### Step 3: Configuring the Experiment
+
+<!-- To do -->
+
+
+
 
 
