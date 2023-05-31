@@ -37,19 +37,23 @@ See the folder `config/` for the list of our modeling experiment files. New expe
 
 ### Step 1: Configuring the Data
 
-To configure a training run that models on a specific version of Linkage Disequillibrium pruned data to a specific phenotypes dataset, one will need to write a conifg file in the `config/dataset` folder.  Adjust `geno_bed`, `geno_bim`, and `geno_fam` to call the specific genotypes dataset and adjust `phenotypes` to call the specific phenotypes dataset.  Adjusting `select_traits` will limit to certain phenotypes. The `gwas_p_value` will adjust the variant reduction based on GWAS statistical association p-value to the input phenotypes, but this parameter can be swept when configuring an experiment.
+Step 1 is to configure the training run to call a specific versions of the genotype and phenotype datasets. One will need to write a dataset conifg file in the `config/dataset` folder.  Adjust `geno_bed`, `geno_bim`, and `geno_fam` to call the specific LD pruned genotypes datasets and adjust `phenotypes` to call the specific phenotypes dataset.  Adjusting `select_traits` will limit to certain phenotypes. The `gwas_p_value` will adjust the variant reduction based on GWAS statistical association p-value to the input phenotypes, but this parameter can be swept when configuring an experiment.
 
-![Alt text](screenshots/data_configure.png?raw=true)
+![Alt text](screenshots/data_configure.png?raw=true?width="400"?height="200")
 
 ### Step 2: Configuring the Model
 
-To configure a training run that calls a specific type of Machine Learning model, such as an XGBoost, one will need to write a config file in the `config/models` folder and establish the default hyperparameters that can be called or adjusted when configuring an experiment.  Adjust the `import_module` to call the python Machine Learning module.  Custom use defined models are permitted so long they have .fit and .predict.  Adujust `name` to call the specific model from the module, such as XGBRegressor from the xgboost python module.  Adjsut `params` according to the authorized hyperparameters of the model.
+Step 2 is to configure the training to call a specific type of Machine Learning model, such as an XGBoost. One will need to write a model config file in the `config/models` folder and establish the default hyperparameters that can be called or adjusted when configuring an experiment.  Adjust the `import_module` to call the python Machine Learning module.  Custom user defined models are permitted so long they have .fit and .predict.  Adujust `name` to call the specific model from the module, such as XGBRegressor from the xgboost python module.  Adjsut `params` according to the authorized hyperparameters of the model.
 
 ![Alt text](screenshots/model_configure.png?raw=true)
 
 ### Step 3: Configuring the Experiment
 
-<!-- To do -->
+Step 3 is to configure the experiment by calling one of the dataset config files and one of the model config files along with a potential optimized sweep of hyperparameters via optuna.  One will ned to write an experiment config file in the `config` folder.  The name of this file will be passed to the `--config-name`command line argument.  The hyperparameters listed in the dataset config file (such as `gwas_p_value`) and the hyperparameters listed in the model config file can either be optimally swept over an interval or grid searched.
+
+![Alt text](screenshots/experiment_configure.png?raw=true)
+
+
 
 
 
