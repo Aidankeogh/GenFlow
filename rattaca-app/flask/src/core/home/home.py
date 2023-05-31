@@ -1,10 +1,15 @@
+import json
 import numpy as np
 import pandas as pd
 import os
 import yaml
 from datetime import datetime
 
-ml_folder = 'mlruns'
+
+def get_ml_folder():
+    with open(f'settings.json', 'r') as f:
+        data = json.load(f)
+        return data['mlflow-path']
 
 def list_folders(path):
     """
@@ -13,7 +18,9 @@ def list_folders(path):
     dir_list = next(os.walk(path))[1]
     return dir_list
 
+
 def extract_exp_fields(exp):
+    ml_folder = get_ml_folder()
     with open(f'{ml_folder}/{exp}/meta.yaml', 'r') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
 
@@ -26,25 +33,40 @@ def extract_exp_fields(exp):
 
 
 def extract_run_fields(exp, run):
+    ml_folder = get_ml_folder()
     with open(f'{ml_folder}/{exp}/{run}/meta.yaml', 'r') as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
+    
+    run_start = None
+    if data['start_time'] is not None:
+        run_start = datetime.fromtimestamp(data['start_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S")
+
+    run_end = None
+    if data['start_time'] is not None:
+        run_end = datetime.fromtimestamp(data['start_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S")
 
     return {
         'run_id': run,
         'run_name': data['run_name'],
-        'run_start': datetime.fromtimestamp(data['start_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S"),
-        'run_end': datetime.fromtimestamp(data['end_time'] / 1000.0).strftime("%Y-%m-%d %H:%M:%S")
+        'run_start': run_start,
+        'run_end': run_end
     }
 
 
 def get_df(params={}):
+    ml_folder = get_ml_folder()
+
     dir_list = list_folders(ml_folder)
     
     exps = [
         d
         for d in dir_list 
-        if len(os.listdir(f'{ml_folder}/{d}')) > 1 and d[0] != '.'
+        if 
+        len(os.listdir(f'{ml_folder}/{d}')) > 1 and 
+        d[0] != '.' and 
+        not ('models' in d)
     ]
+
     spec_exp_ids = params.get('exp_ids', [])
     if spec_exp_ids:
         exps = [exp for exp in exps if exp in spec_exp_ids]
@@ -69,10 +91,9 @@ def get_df(params={}):
             data.append({**exp_fields, **run_fields})
 
     df = pd.DataFrame(data).fillna(np.nan).replace([np.nan], [None])
-
     df['ix'] = df.index + 1
-
     show = [col for col in params['show'] if col in df.columns]
+
     return {
         'rows': df[show].to_dict(orient='records'),
         'columns': [{'text': params['rename'].get(col, col), 'value': col, 'sortable': True} for col in show]
@@ -91,6 +112,7 @@ def get_run_spec(row):
 
 
 def get_metrics(exp_id, run_id):
+    ml_folder = get_ml_folder()
     folder_path = f'{ml_folder}/{exp_id}/{run_id}/metrics'
     
     metrics = {}
@@ -104,6 +126,8 @@ def get_metrics(exp_id, run_id):
 
 
 def get_params(exp_id, run_id):
+    ml_folder = get_ml_folder()
+
     folder_path = f'{ml_folder}/{exp_id}/{run_id}/params'
     
     params = {}
