@@ -27,8 +27,8 @@
   export default {
     name: 'App',
     created(){
-      this.axios.defaults.baseURL = 'http://localhost:5001';
-      window.GOOGLE_API_KEY = 'AIzaSyDJW4jsPlNKgv6jFm3B5Edp5ywgdqLWdmc';
+      // this.axios.defaults.baseURL = 'http://localhost:5001';
+      this.axios.defaults.baseURL = 'http://narrows-gpu.sdsc.edu:5001';
     }
   }
 </script>
