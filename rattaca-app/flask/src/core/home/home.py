@@ -89,10 +89,12 @@ def get_df(params={}):
                 run_fields = {**run_fields, **run_metrics}
 
             data.append({**exp_fields, **run_fields})
-
+    
     df = pd.DataFrame(data).fillna(np.nan).replace([np.nan], [None])
+    df = df.rename(columns=lambda x: x.replace('.', '_'))
     df['ix'] = df.index + 1
     show = [col for col in params['show'] if col in df.columns]
+
 
     return {
         'rows': df[show].to_dict(orient='records'),
