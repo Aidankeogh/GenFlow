@@ -65,17 +65,6 @@ Once it's finished start the application with the following command
 npm run dev
 ```
 
-#### Piles pre-processing
-
-Uncomment what you want to run on the file flask/src/core/piles/piles.py
-
-With the activated enviroment and on path flask/src/core/piles
-
-Run
-
-```bash
-python piles.py
-```
 
 ## Usage
 ---
