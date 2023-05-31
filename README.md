@@ -39,7 +39,7 @@ See the folder `config/` for the list of our modeling experiment files. New expe
 
 Step 1 is to configure the training run to call a specific versions of the genotype and phenotype datasets. One will need to write a dataset conifg file in the `config/dataset` folder.  Adjust `geno_bed`, `geno_bim`, and `geno_fam` to call the specific LD pruned genotypes datasets and adjust `phenotypes` to call the specific phenotypes dataset.  Adjusting `select_traits` will limit to certain phenotypes. The `gwas_p_value` will adjust the variant reduction based on GWAS statistical association p-value to the input phenotypes, but this parameter can be swept when configuring an experiment.
 
-![Alt text](screenshots/data_configure.png?raw=true?width="400"?height="200")
+![Alt text](screenshots/data_configure.png?raw=true)
 
 ### Step 2: Configuring the Model
 
