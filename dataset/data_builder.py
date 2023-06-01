@@ -27,9 +27,14 @@ class training_data(object):
         # Read in plink version of genotypes
         ds = plink.read_plink(bed_path = geno_bed, bim_path = geno_bim, fam_path = geno_fam)
         ds = ds.set_index({"samples": "sample_id"})
+        
+        if phenotypes[-4:] == ".csv": # Support CSV and TSV
+            pheno_sep = ","
+        else:
+            pheno_sep = "\t"
 
         # Read in phenotypes data and ensure it's clean, no missing data
-        phenotypes = pd.read_csv(phenotypes, sep = '\t')
+        phenotypes = pd.read_csv(phenotypes, sep = pheno_sep)
         phenotypes = phenotypes.set_index('rfid')
         if select_traits:
             phenotypes = phenotypes[select_traits]

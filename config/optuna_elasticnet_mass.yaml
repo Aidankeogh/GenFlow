@@ -1,8 +1,8 @@
 # A test that sweeps over parameters for a ElasticNet regression model.
-experiment_name: optuna_elastic
+experiment_name: optuna_elasticnet_mass
 
 defaults:
-    - dataset: dataset_cluster
+    - dataset: dataset_mass_ld_0.95
     - model: elastic_net
     - override hydra/sweeper: optuna
     - override hydra/sweeper/sampler: tpe
@@ -15,8 +15,10 @@ hydra:
     direction: maximize
     study_name: ${experiment_name}
     storage: null
-    n_trials: 10
+    n_trials: 1000
     n_jobs: 1
     params:
       model.params.alpha: interval(0, 10)
       model.params.l1_ratio: interval(0, 1)
+      dataset.gwas_p_value: range(0.05, 1, step=0.05)
+      dataset.params.filter_unknowns: choice(False, True)

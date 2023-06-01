@@ -1,8 +1,8 @@
 # A test that sweeps over the alpha parameter for a ridge regression model.
-experiment_name: optuna_xgboost
+experiment_name: xgboost_mass_fullsweep
 
 defaults:
-    - dataset: dataset_cluster
+    - dataset: dataset_mass_ld_0.95
     - model: xgboost
     - override hydra/sweeper: optuna
     - override hydra/sweeper/sampler: tpe
@@ -15,27 +15,17 @@ hydra:
     direction: maximize
     study_name: ${experiment_name}
     storage: null
-<<<<<<< HEAD
-    n_trials: 10
+    n_trials: 1000
     n_jobs: 1
     params:
       model.params.eta: interval(0, 1)
       model.params.gamma: interval(0, 10)
-      model.params.max_depth: int(interval(0, 10))
+      model.params.max_depth: int(interval(1, 10))
       model.params.min_child_weight: interval(0, 10)
       model.params.max_delta_step: int(interval(0, 10))
       model.params.lambda: interval(0, 10)
       model.params.alpha: interval(0, 10)
       model.params.subsample: interval(0.1, 1)
-      
-      
-      
-=======
-    n_trials: 1000
-    n_jobs: 1
-    params:
-      model.params.max_depth: range(2, 20)
-      model.params.gamma: tag(log, interval(0.00001, 10))
-      model.params.min_child_weight: tag(log, interval(0.00001, 10))
-      model.params.lambda: tag(log, interval(0.00001, 10))
->>>>>>> master
+      dataset.gwas_p_value: range(0.05, 1, step=0.05)
+      dataset.params.filter_unknowns: choice(False, True)
+
