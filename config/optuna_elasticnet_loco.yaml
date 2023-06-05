@@ -1,0 +1,24 @@
+# A test that sweeps over parameters for a ElasticNet regression model.
+experiment_name: elasticnet_loco_alpha_l1
+
+defaults:
+    - dataset: dataset_cluster
+    - model: elastic_net
+    - override hydra/sweeper: optuna
+    - override hydra/sweeper/sampler: tpe
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    sampler:
+      seed: 123
+    direction: maximize
+    study_name: ${experiment_name}
+    storage: null
+    n_trials: 100
+    n_jobs: 1
+    params:
+      model.params.alpha: interval(0, 10)
+      model.params.l1_ratio: interval(0, 1)
+      #dataset.gwas_p_value: range(0.05, 1, step=0.05)
+      #dataset.params.filter_unknowns: choice(False, True)

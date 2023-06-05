@@ -1,0 +1,23 @@
+experiment_name: ridge_alpha_pca_tradeoff
+
+defaults:
+    - dataset: dataset_mass_ld_0.95
+    - model: linear
+    - dimensionality_reduction: pca_100k
+    - override hydra/sweeper: optuna
+    - override hydra/sweeper/sampler: tpe
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    sampler:
+      seed: 123
+    direction: maximize
+    study_name: ${experiment_name}
+    storage: null
+    n_trials: 200
+    n_jobs: 1
+    params:
+      model.params.alpha: interval(0, 20)
+      dimensionality_reduction.params.n_components: range(20, 4500)
+      #model.params.l1_ratio: interval(0, 1)

@@ -9,10 +9,3 @@ params:
       - 'loco_maxrear'
       - 'loco_maxact'
 gwas_p_value: 0.05
-dimensionality_reduction:
-    name: PCA
-    import_module: sklearn.decomposition
-    params: 
-        n_components: 100
-        svd_solver: randomized
-

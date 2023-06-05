@@ -1,0 +1,5 @@
+name: PCA
+import_module: sklearn.decomposition
+params: 
+    n_components: 4500
+    svd_solver: auto
