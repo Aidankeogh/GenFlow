@@ -23,6 +23,7 @@
         props: {
             itemId: {required: true},
             js:{required: true},
+            globals: {default: ()=> {return {}}},
             dataValues: {default: ()=> {return []}},
         },
         data(){
@@ -42,7 +43,7 @@
                 })
                 Promise.all(promises).then(()=> {
                     try {
-                        let args = {'tables': JSON.parse(JSON.stringify(this.tableDfs))};
+                        let args = {'tables': JSON.parse(JSON.stringify(this.tableDfs)), 'globals': JSON.parse(JSON.stringify(this.globals))};
                         console.log(`==== Args ====`, {args});
                         this.echartOption = runJsCode(this.js, args);
                         console.log(`==== echartOption ====`, JSON.parse(JSON.stringify(this.echartOption)));
@@ -78,9 +79,14 @@
         watch:{
             js(){
                 this.getOption();
+            },
+            globals: {
+                handler() {
+                    this.getOption()
+                },
+                deep: true
             }
         }
     }
-
 
 </script>

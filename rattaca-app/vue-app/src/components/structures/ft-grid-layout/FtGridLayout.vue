@@ -23,9 +23,11 @@
                         :ref="'gridItem' + item.i"
                         @delete="deleteComp(item.i)"
                         @edit="editComp(item.i)"
+                        @updateGlobals="updateTempGlobals"
                         :comp="item.comp"
                         :mode="mode"
                         :itemId="'item' + item.i"
+                        :globals="globals"
                     >
                     </ft-grid-item>
                 </grid-item>
@@ -44,6 +46,7 @@
 </template>
 
 <script>
+    import _ from 'lodash';
     import FtGridItem from './FtGridItem.vue';
     import itemModal from '../create-modals/itemModal.vue';
 
@@ -69,7 +72,7 @@
             }
         },
         mounted(){
-            this.resizeAll();
+            this.triggerGlobals();
         },
         data () {
             return {
@@ -78,7 +81,10 @@
                 layout: this.modelValue.layout,
                 showModal:{
                     component: false
-                }
+                },
+                globals: {},
+                tempGlobals: {},
+                intialMount: false
             }
         },
         watch:{
@@ -147,6 +153,19 @@
                     ...this.modelValue,
                     layout: this.layout
                 })
+            },
+            triggerGlobals(){
+                this.intialMount = true;
+                this.$nextTick(() => {
+                    this.globals = JSON.parse(JSON.stringify(this.tempGlobals));
+                    this.resizeAll()
+                })
+            },
+            updateTempGlobals(global){
+                this.tempGlobals[global.itemId] = global.value;
+                if(this.intialMount){
+                    this.triggerGlobals();
+                }
             }
         }
     }

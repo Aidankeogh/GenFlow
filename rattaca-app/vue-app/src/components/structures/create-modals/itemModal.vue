@@ -21,7 +21,7 @@
                     v-model:value="markdownCode"
                     class="ft-ace-editor"
                     lang="markdown"
-                    height="380px"
+                    height="450px"
                     width="100%">
                 </ft-ace>
             </div>
@@ -42,7 +42,17 @@
                     v-model:value="jsCode"
                     class="ft-ace-editor"
                     lang="javascript"
-                    height="380px"
+                    height="450px"
+                    width="100%">
+                </ft-ace>
+            </div>
+            <div v-if="selVal.value=='ft-select'">
+                <ft-ace 
+                    @init="initEditor"
+                    v-model:value="selectJson"
+                    class="ft-ace-editor"
+                    lang="json"
+                    height="450px"
                     width="100%">
                 </ft-ace>
             </div>
@@ -62,7 +72,8 @@
 
     const compRef = {
         'ft-markdown': 'Markdown',
-        'ft-echartsJs': 'Echarts Js'
+        'ft-echartsJs': 'Echarts Js',
+        'ft-select': 'Select Option'
     }
 
     const defaultJs = `option = {
@@ -86,6 +97,7 @@
 };
 return option;
 `
+    const defaultSelectProps = JSON.stringify({initialValue: null, label: "", bind: {}}, null, 4);
 
     export default {
         name: 'item-modal',
@@ -118,6 +130,7 @@ return option;
                     'label' : compRef[_.get(this.initialItem, 'comp.component', 'ft-markdown')],
                 }, 
                 markdownCode: _.get(this.initialItem, 'comp.bind.markdown', '### This is a Markdown'),
+                selectJson: _.get(this.initialItem, 'comp.bind.propsJson', defaultSelectProps),
                 jsCode: _.get(this.initialItem, 'comp.bind.js', defaultJs),
                 compOptions: Object.keys(compRef).map(key => {
                     return {value: key, label: compRef[key]}
@@ -154,6 +167,19 @@ return option;
                             bind: {
                                 js: this.jsCode,
                                 dataValues: this.dataValues
+                            }
+                        }
+                    case 'ft-select':
+                        try{
+                            JSON.parse(this.selectJson)
+                        }catch(err){
+                            alert('Invalid Json')
+                            return;
+                        }
+                        return {
+                            component: this.selVal.value,
+                            bind: {
+                                propsJson: this.selectJson
                             }
                         }
                     default:
