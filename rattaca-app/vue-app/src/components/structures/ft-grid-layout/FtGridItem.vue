@@ -10,7 +10,7 @@
                 </label>
             </div>
         </div>
-        <component ref="myComp" :is="comp.component" v-bind="comp.bind" :itemId="itemId">
+        <component @updateGlobals="updateGlobals" ref="myComp" :is="comp.component" v-bind="comp.bind" :globals="globals" :itemId="itemId">
             
         </component>
     </div>
@@ -19,23 +19,29 @@
 <script>
     import FtMarkdown from './FtMarkdown.vue';
     import FtEchartsJs from './FtEchartsJs.vue';
+    import FtSelect from './FtSelect.vue';
 
     export default {
         name: 'ft-grid-item',
         components:{
             FtMarkdown,
-            FtEchartsJs
+            FtEchartsJs,
+            FtSelect
         },
         props:{
             comp:{required:true},
             mode:{default: 'create'},
-            itemId: {required: true}
+            itemId: {required: true},
+            globals:{default: () => Object()}
         },
         methods:{
             resize(){
                 try{
                     this.$refs.myComp.resize()
                 } catch(error){}
+            },
+            updateGlobals(data){
+                this.$emit('updateGlobals', data);
             }
         }
     }
