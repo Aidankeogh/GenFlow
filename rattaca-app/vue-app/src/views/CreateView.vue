@@ -5,7 +5,6 @@
         <label> Create Dashboard</label>
         <label @click="showModal.config=true" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'gear']" /></label>
         <label @click="addComp" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'circle-plus']" /></label>
-        <label @click="toggleFullscreen" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'expand']" /></label>
       </span>
     </template>
     <!-- <div v-if="!res.success" class="resp-div"> Server Response: {{JSON.stringify(res)}}</div> -->
@@ -48,28 +47,9 @@
         }
       }
     },
-    mounted() {
-      document.addEventListener("fullscreenchange", this.handleFullscreenChange);
-    },
-    beforeDestroy() {
-      document.removeEventListener("fullscreenchange", this.handleFullscreenChange);
-    },
     methods:{
       addComp(){
         this.$refs.ftGrid.addComp();
-      },
-      toggleFullscreen() {
-        const element = this.$refs.fullscreenElement;
-        element.requestFullscreen().then(() => {
-          this.$nextTick(() => 
-            setTimeout(() => this.$refs.gridLayout.resizeAll(), 200) 
-          );
-        }).catch(err => {
-          console.error(`Error attempting to enable fullscreen: ${err.message}`);
-        });
-      },
-      handleFullscreenChange() {
-        this.isFullScreen = !this.isFullScreen;
       }
     }
   };
