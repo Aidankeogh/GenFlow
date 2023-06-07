@@ -3,8 +3,9 @@
       <template #title>
         <span class="ft-d-flex">
           <label> Dashboards Page</label>
+          <label @click="toggleFullscreen" class="ft-hover-text ft-pl-2"><font-awesome-icon :icon="['fas', 'expand']" /></label>
         </span>
-        <span class="ft-d-flex ft-pt-2" style="width:250px;">
+        <span class="ft-d-flex ft-pt-2" style="width:450px;">
           <v-select
             class="ft-w-100" 
               v-if="loadOptions"
@@ -15,10 +16,16 @@
               </template>
           </v-select>
           <button @click="loadSetting" class="ft-btn ft-border ft-btn-light ft-hover-text-white ft-hover-bg-ft "> Load</button>
+          
         </span>
       </template>
       <div v-if="Object.keys(dashboardModel).length" style="min-height:90vh;">
         <ft-grid-layout ref="gridLayout" :modelValue="dashboardModel" mode="view"></ft-grid-layout>
+      </div>
+      <div ref="fullscreenElement">
+        <div v-if="isFullScreen">
+          <ft-grid-layout ref="gridLayout" v-model:modelValue="dashboardModel" mode="view"></ft-grid-layout>
+        </div>
       </div>
     </ft-container>
   </template>
@@ -37,11 +44,16 @@
         return {
           loadValue: null,
           loadOptions: [],
-          dashboardModel: {}
+          dashboardModel: {},
+          isFullScreen: false,
         }
       },
       mounted(){
+        document.addEventListener("fullscreenchange", this.handleFullscreenChange);
         this.getSettings()
+      },
+      beforeDestroy() {
+        document.removeEventListener("fullscreenchange", this.handleFullscreenChange);
       },
       methods:{
         getSettings(){
@@ -67,6 +79,19 @@
               console.log(error);
           })
         },
+        toggleFullscreen() {
+          const element = this.$refs.fullscreenElement;
+          element.requestFullscreen().then(() => {
+            this.$nextTick(() => 
+              setTimeout(() => this.$refs.gridLayout.resizeAll(), 200) 
+            );
+          }).catch(err => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+          });
+        },
+        handleFullscreenChange() {
+          this.isFullScreen = !this.isFullScreen;
+        }
       }
     };
   </script>
