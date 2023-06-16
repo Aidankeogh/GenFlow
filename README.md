@@ -1,5 +1,5 @@
-# RATTACA: A Streamlined Workflow to Facilitate Genome-Scale AI
-The RATTACA project aims to use Whole Genome Sequencing data from a heterogenius stock of rats to identify variants that are linked to extreme phenotypes primarily related to physciatric behavior and addiction. The goal of this work is to provide a pipeline that accelerates the use of Machine Learning in Genome-Wide Association Studies (GWAS) by integrating the standard Genomics toolkits of Sgkit and Plink with the standard Machine Learning training toolkits of Sklearn, Hydra, MLFlow, and Optuna.  With this combination of toolkits from Genomics and Machine Learning, this repository offers a streamlined workflow for repetative training and evaluation of Machine Learning methods that aim to predict phenotypes from genotypes.  The results from various training runs can then be interactively visualized and assesed via the MLFlow user dashboard.  The following image summarizes the workflow.
+# GenFlow: A Streamlined Workflow to Facilitate Genome-Scale AI
+This work uses data from the RATTACA project in the Palmer Lab at UCSD, which aims to use Whole Genome Sequencing data from a heterogenius stock of rats to identify variants that are linked to extreme phenotypes primarily related to physciatric behavior and addiction. The overall goal of this work is to provide a pipeline that accelerates the use of Machine Learning in Genome-Wide Association Studies (GWAS) by integrating the standard Genomics toolkits of Sgkit and Plink with the standard Machine Learning training toolkits of Sklearn, PyTorch, Hydra, MLFlow, and Optuna.  With this combination of toolkits from Genomics and Machine Learning, this repository offers a streamlined workflow for repetative training and evaluation of Machine Learning methods that aim to predict phenotypes from genotypes.  The results from various training runs can then be interactively visualized and assesed via the MLFlow user dashboard as well as further assessed with advanced visualization through our implementation of Vue.js.  The following image summarizes GenFlow.
 
 ![Alt text](screenshots/streamlined_workflow.png)
 
@@ -7,9 +7,7 @@ The RATTACA project aims to use Whole Genome Sequencing data from a heterogenius
 
 The training pipeline was built to use the following technologies:
 
-<!-- table of requirements -->
-
-The pipeline has been tested with Python 3.X. <!-- add python versions that work -->
+The pipeline has been tested with Python 3.X.
 
 This repository provides an environment file to setup a conda environment for running the training pipeline.
 
